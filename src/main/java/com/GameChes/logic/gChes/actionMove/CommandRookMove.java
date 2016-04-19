@@ -9,9 +9,9 @@ import java.util.ArrayList;
 /**
  * Created by Nikita on 16.04.2016.
  */
-public class CommandElephantMove extends CommandChessMove {
+public class CommandRookMove extends CommandChessMove {
 
-    public CommandElephantMove(GObject gObject, GBoard gBoard) {
+    public CommandRookMove(GObject gObject, GBoard gBoard) {
         super(gObject, gBoard);
     }
 

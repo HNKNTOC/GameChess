@@ -1,5 +1,5 @@
 import com.GameChes.logic.gCellChes.GCellChessFactory;
-import com.GameChes.logic.gChes.actionMove.CommandElephantMove;
+import com.GameChes.logic.gChes.actionMove.CommandRookMove;
 import com.GameChes.logic.gChes.actionMove.CommandHorseMove;
 import com.GameChes.logic.gChes.actionMove.CommandPawnMove;
 import com.GameChes.logic.gChes.factory.GChessFactory;
@@ -7,7 +7,6 @@ import com.GameChes.logic.mouseListener.MouseListenerGChes;
 import com.GameChes.logic.res.ImageNameChess;
 import com.GameEngine.gui.Display;
 import com.GameEngine.gui.JDisplay;
-import com.GameEngine.logic.action.command.ActionCommand;
 import com.GameEngine.logic.gameComponents.boardComponents.gBoard.GBoard;
 import com.GameEngine.logic.gameComponents.boardComponents.gBoard.GBoardFactory;
 import com.GameEngine.logic.gameComponents.boardComponents.gBoard.GBoardFactoryDefault;
@@ -37,7 +36,7 @@ public class Main {
         resManager.putImageIcon(ImageLoader.getImage(ImageNameChess.CHESS_BLACK));
         resManager.putImageIcon(ImageLoader.getImage(ImageNameChess.CHESS_WHITE));
         resManager.putImageIcon(ImageLoader.getImage(ImageNameChess.CHESS_PAWN));
-        resManager.putImageIcon(ImageLoader.getImage(ImageNameChess.CHESS_ELEPHANT));
+        resManager.putImageIcon(ImageLoader.getImage(ImageNameChess.CHESS_ROOK));
         resManager.putImageIcon(ImageLoader.getImage(ImageNameChess.CHESS_HORSE));
         resManager.putImageIcon(ImageLoader.getImage(ImageName.NULL));
 
@@ -79,8 +78,8 @@ public class Main {
 
         x = 0;
         for (int i = 0; i < 2; i++) {
-            GObject elephant = factory.createChess(resManager.getImageIcon(ImageNameChess.CHESS_ELEPHANT));
-            elephant.getReceiverAction().setActionCommand(new CommandElephantMove(elephant,gBoard),0);
+            GObject elephant = factory.createChess(resManager.getImageIcon(ImageNameChess.CHESS_ROOK));
+            elephant.getReceiverAction().setActionCommand(new CommandRookMove(elephant,gBoard),0);
             elephant.setX(x);
             elephant.setY(7);
             listGCell.get(x,7).setGObject(elephant);
