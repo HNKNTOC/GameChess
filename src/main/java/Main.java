@@ -1,5 +1,6 @@
 import com.GameChes.logic.gCellChes.GCellChessFactory;
 import com.GameChes.logic.gChes.actionMove.CommandElephantMove;
+import com.GameChes.logic.gChes.actionMove.CommandHorseMove;
 import com.GameChes.logic.gChes.actionMove.CommandPawnMove;
 import com.GameChes.logic.gChes.factory.GChessFactory;
 import com.GameChes.logic.mouseListener.MouseListenerGChes;
@@ -37,6 +38,7 @@ public class Main {
         resManager.putImageIcon(ImageLoader.getImage(ImageNameChess.CHESS_WHITE));
         resManager.putImageIcon(ImageLoader.getImage(ImageNameChess.CHESS_PAWN));
         resManager.putImageIcon(ImageLoader.getImage(ImageNameChess.CHESS_ELEPHANT));
+        resManager.putImageIcon(ImageLoader.getImage(ImageNameChess.CHESS_HORSE));
         resManager.putImageIcon(ImageLoader.getImage(ImageName.NULL));
 
 
@@ -83,6 +85,16 @@ public class Main {
             elephant.setY(7);
             listGCell.get(x,7).setGObject(elephant);
             x = 7;
+        }
+
+        x = 1;
+        for (int i = 0; i < 2; i++) {
+            GObject Horse = factory.createChess(resManager.getImageIcon(ImageNameChess.CHESS_HORSE));
+            Horse.getReceiverAction().setActionCommand(new CommandHorseMove(Horse,gBoard),0);
+            Horse.setX(x);
+            Horse.setY(7);
+            listGCell.get(x,7).setGObject(Horse);
+            x = 6;
         }
 
     }
