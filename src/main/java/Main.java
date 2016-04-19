@@ -1,4 +1,5 @@
 import com.GameChes.logic.gCellChes.GCellChessFactory;
+import com.GameChes.logic.gChes.actionMove.CommandElephantMove;
 import com.GameChes.logic.gChes.actionMove.CommandRookMove;
 import com.GameChes.logic.gChes.actionMove.CommandHorseMove;
 import com.GameChes.logic.gChes.actionMove.CommandPawnMove;
@@ -38,6 +39,7 @@ public class Main {
         resManager.putImageIcon(ImageLoader.getImage(ImageNameChess.CHESS_PAWN));
         resManager.putImageIcon(ImageLoader.getImage(ImageNameChess.CHESS_ROOK));
         resManager.putImageIcon(ImageLoader.getImage(ImageNameChess.CHESS_HORSE));
+        resManager.putImageIcon(ImageLoader.getImage(ImageNameChess.CHESS_ELEPHANT));
         resManager.putImageIcon(ImageLoader.getImage(ImageName.NULL));
 
 
@@ -88,12 +90,22 @@ public class Main {
 
         x = 1;
         for (int i = 0; i < 2; i++) {
-            GObject Horse = factory.createChess(resManager.getImageIcon(ImageNameChess.CHESS_HORSE));
-            Horse.getReceiverAction().setActionCommand(new CommandHorseMove(Horse,gBoard),0);
-            Horse.setX(x);
-            Horse.setY(7);
-            listGCell.get(x,7).setGObject(Horse);
+            GObject horse = factory.createChess(resManager.getImageIcon(ImageNameChess.CHESS_HORSE));
+            horse.getReceiverAction().setActionCommand(new CommandHorseMove(horse,gBoard),0);
+            horse.setX(x);
+            horse.setY(7);
+            listGCell.get(x,7).setGObject(horse);
             x = 6;
+        }
+
+        x = 2;
+        for (int i = 0; i < 2; i++) {
+            GObject elephant = factory.createChess(resManager.getImageIcon(ImageNameChess.CHESS_ELEPHANT));
+            elephant.getReceiverAction().setActionCommand(new CommandElephantMove(elephant,gBoard),0);
+            elephant.setX(x);
+            elephant.setY(7);
+            listGCell.get(x,7).setGObject(elephant);
+            x = 5;
         }
 
     }

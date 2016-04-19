@@ -6,7 +6,7 @@
 
     <groupId>HkCompany</groupId>
     <artifactId>GameChess</artifactId>
-    <version>0.5.0-alpha</version>
+    <version>0.7.0-alpha</version>
 
     <dependencies>
         <dependency>

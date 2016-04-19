@@ -9,4 +9,5 @@ public interface ImageNameChess{
     String CHESS_PAWN = "pawn.png";
     String CHESS_ROOK = "rook.png";
     String CHESS_HORSE = "horse.png";
+    String CHESS_ELEPHANT = "elephant.png";
 }
