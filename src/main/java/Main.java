@@ -1,8 +1,5 @@
 import com.GameChes.logic.gCellChes.GCellChessFactory;
-import com.GameChes.logic.gChes.actionMove.CommandElephantMove;
-import com.GameChes.logic.gChes.actionMove.CommandRookMove;
-import com.GameChes.logic.gChes.actionMove.CommandHorseMove;
-import com.GameChes.logic.gChes.actionMove.CommandPawnMove;
+import com.GameChes.logic.gChes.actionMove.*;
 import com.GameChes.logic.gChes.factory.GChessFactory;
 import com.GameChes.logic.mouseListener.MouseListenerGChes;
 import com.GameChes.logic.res.ImageNameChess;
@@ -40,6 +37,8 @@ public class Main {
         resManager.putImageIcon(ImageLoader.getImage(ImageNameChess.CHESS_ROOK));
         resManager.putImageIcon(ImageLoader.getImage(ImageNameChess.CHESS_HORSE));
         resManager.putImageIcon(ImageLoader.getImage(ImageNameChess.CHESS_ELEPHANT));
+        resManager.putImageIcon(ImageLoader.getImage(ImageNameChess.CHESS_KING));
+        resManager.putImageIcon(ImageLoader.getImage(ImageNameChess.CHESS_QUEEN));
         resManager.putImageIcon(ImageLoader.getImage(ImageName.NULL));
 
 
@@ -107,6 +106,18 @@ public class Main {
             listGCell.get(x,7).setGObject(elephant);
             x = 5;
         }
+
+        GObject queen = factory.createChess(resManager.getImageIcon(ImageNameChess.CHESS_QUEEN));
+        queen.getReceiverAction().setActionCommand(new CommandQueenMove(queen,gBoard),0);
+        queen.setX(3);
+        queen.setY(7);
+        listGCell.get(3,7).setGObject(queen);
+
+        GObject king = factory.createChess(resManager.getImageIcon(ImageNameChess.CHESS_QUEEN));
+        king.getReceiverAction().setActionCommand(new CommandElephantMove(king,gBoard),0);
+        king.setX(4);
+        king.setY(7);
+        listGCell.get(4,7).setGObject(king);
 
     }
 
