@@ -114,7 +114,7 @@ public class Main {
         listGCell.get(3,7).setGObject(queen);
 
         GObject king = factory.createChess(resManager.getImageIcon(ImageNameChess.CHESS_QUEEN));
-        king.getReceiverAction().setActionCommand(new CommandElephantMove(king,gBoard),0);
+        king.getReceiverAction().setActionCommand(new CommandKingMove(king,gBoard),0);
         king.setX(4);
         king.setY(7);
         listGCell.get(4,7).setGObject(king);
