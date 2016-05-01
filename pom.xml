@@ -6,13 +6,13 @@
 
     <groupId>HkCompany</groupId>
     <artifactId>GameChess</artifactId>
-    <version>0.7.0-alpha</version>
+    <version>0.7.1-alpha</version>
 
     <dependencies>
         <dependency>
             <groupId>HkCompany</groupId>
             <artifactId>GameEngine</artifactId>
-            <version>3.1.7-alpha</version>
+            <version>3.1.8-alpha</version>
         </dependency>
     </dependencies>
 

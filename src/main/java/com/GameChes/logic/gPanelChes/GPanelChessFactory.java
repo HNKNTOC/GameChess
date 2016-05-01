@@ -28,13 +28,13 @@ public class GPanelChessFactory implements GPanelFactory<GPanelCell> {
 
     @Override
     public GPanelCell createGPanel() {
-        GPanelChessCell panel = new GPanelChessCell();
+        GPanelCell panel = new GPanelCell();
         settingPanel(panel);
         return panel;
     }
 
-    public GPanelCellInf createGPanelInf(GCell cell){
-        GPanelCellInf panel = new GPanelCellInf(cell);
+    public GPanelCell createGPanelInf(GCell cell){
+        GPanelCell panel = new GPanelCellInf(cell);
         settingPanel(panel);
         return panel;
     }

@@ -94,7 +94,8 @@ public class MouseListenerGChes implements MouseListener {
             ListGCell<GCell> listGCell = gBoard.getListGCell();
             for (Point point : listPosition) {
                 GPanelCell panel = listGCell.get((int) point.getX(), (int) point.getY()).getGPanel();
-                panel.getDynamicValues().putParameter("Color","1");
+                panel.getDynamicValues().putParameter(GPanelCell.PARAMETER_NAME_SELECTION,"1");
+                panel.getDynamicValues().putParameter(GPanelCell.PARAMETER_NAME_SELECTION_COLOR,"255,0,0");
                 panel.repaint();
                 backlightCells.add(panel);
             }
@@ -103,7 +104,8 @@ public class MouseListenerGChes implements MouseListener {
 
     private void resetBacklight(){
         for (GPanel panel : backlightCells) {
-            panel.getDynamicValues().putParameter("Color","0");
+            panel.getDynamicValues().putParameter(GPanelCell.PARAMETER_NAME_SELECTION,"0");
+            panel.getDynamicValues().putParameter(GPanelCell.PARAMETER_NAME_SELECTION_COLOR,"0,0,0");
             panel.repaint();
         }
     }
