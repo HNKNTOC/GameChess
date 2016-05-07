@@ -5,7 +5,7 @@ import com.GameEngine.logic.gameComponents.boardComponents.gBoard.GBoard;
 import com.GameEngine.logic.gameComponents.boardComponents.gObject.GObject;
 
 /**
- * Created by Nikita on 17.04.2016.
+ * Базовый класс фабрики для CommandChessMove.
  */
 public interface CommandChessFactory {
     CommandChessMove createCommandChessMove(GBoard gBoard, GObject chess);

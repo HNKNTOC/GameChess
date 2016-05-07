@@ -9,6 +9,7 @@ import com.GameEngine.logic.gameComponents.boardComponents.gBoard.GBoard;
 import com.GameEngine.logic.gameComponents.boardComponents.gBoard.GBoardFactory;
 import com.GameEngine.logic.gameComponents.boardComponents.gBoard.GBoardFactoryDefault;
 import com.GameEngine.logic.gameComponents.boardComponents.gCell.GCell;
+import com.GameEngine.logic.gameComponents.boardComponents.gCell.list.HashMapPanelGCell;
 import com.GameEngine.logic.gameComponents.boardComponents.gCell.list.ListGCell;
 import com.GameEngine.logic.gameComponents.boardComponents.gObject.GObject;
 import com.GameEngine.logic.gameComponents.gPanel.GPanelDefaultFactory;
@@ -23,8 +24,8 @@ import java.util.Iterator;
  */
 public class Main {
 
-    private static int y = 8;
-    private static int x = 8;
+    private static final int MaxY = 8;
+    private static final int MaxX = 8;
     private static ResManager resManager = ResManager.getResManager();
     private static GBoard gBoard;
 
@@ -43,9 +44,9 @@ public class Main {
 
 
         GBoardFactory factoryGBoard = new GBoardFactoryDefault(new GPanelDefaultFactory());
-        gBoard = factoryGBoard.createGBoard(x, y);
+        ListGCell<GCell> listGCell = new GCellChessFactory().createListGCell(MaxX, MaxY);
+        gBoard = factoryGBoard.createGBoard(listGCell);
 
-        placementGCell(gBoard.getListGCell());
         addPawn(gBoard.getListGCell());
 
         gBoard.getGPanel().setImageIcon(null);
@@ -120,27 +121,4 @@ public class Main {
         listGCell.get(4,7).setGObject(king);
 
     }
-
-    public static void placementGCell(ListGCell<GCell> listGCell) {
-        GCellChessFactory factoryBlack = new GCellChessFactory();
-        factoryBlack.getFactory().identifyColor(false);
-        GCellChessFactory factoryWinter = new GCellChessFactory();
-        factoryWinter.getFactory().identifyColor(true);
-
-        Iterator<GCell> iteratorBlack = factoryBlack.createGCell(x * y / 2).iterator();
-        Iterator<GCell> iteratorWhite = factoryWinter.createGCell(x * y / 2).iterator();
-
-
-        for (int i = 0; i < y / 2; i++) {
-            for (int j = 0; j < x / 2; j++) {
-                listGCell.add(iteratorWhite.next());
-                listGCell.add(iteratorBlack.next());
-            }
-            for (int j = 0; j < x / 2; j++) {
-                listGCell.add(iteratorBlack.next());
-                listGCell.add(iteratorWhite.next());
-            }
-        }
-    }
-
 }

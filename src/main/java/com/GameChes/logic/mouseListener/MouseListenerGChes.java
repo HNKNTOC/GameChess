@@ -44,7 +44,7 @@ public class MouseListenerGChes implements MouseListener {
     @Override
     public void mouseReleased(MouseEvent e) {
         GPanelCell panelCell = (GPanelCell) e.getComponent();
-        DynamicParameter<String, String> dynamicValues = panelCell.getDynamicValues();
+        DynamicParameter dynamicValues = panelCell.getDynamicValues();
         int x = Integer.parseInt(dynamicValues.getParameter("X"));
         int y = Integer.parseInt(dynamicValues.getParameter("Y"));
         GCell gCell = gBoard.getListGCell().get(x, y);

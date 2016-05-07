@@ -15,11 +15,14 @@ public class CommandPawnMove extends CommandChessMove {
         super(gObject, gBoard);
     }
 
+
     @Override
     protected ArrayList<Point> calculatePoint() {
         ArrayList<Point> points = new ArrayList<>();
-        points.add(new Point(gObject.getX(),gObject.getY()-1));
-        points.add(new Point(gObject.getX(),gObject.getY()-2));
+        points.add(new Point(gObject.getX(), gObject.getY() - 1));
+        if (gObject.getDynamicValues().getParameterInt(NAME_PARAMETER_NUMBER_MOVE)<=0) {
+            points.add(new Point(gObject.getX(), gObject.getY() - 2));
+        }
         return points;
     }
 }
