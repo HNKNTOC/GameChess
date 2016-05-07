@@ -1,12 +1,12 @@
 package com.GameChes.logic.gChes.actionMove.factory;
 
-import com.GameChes.logic.gChes.actionMove.CommandChessMove;
+import com.GameChes.logic.gChes.actionMove.CommandChesMove;
 import com.GameEngine.logic.gameComponents.boardComponents.gBoard.GBoard;
 import com.GameEngine.logic.gameComponents.boardComponents.gObject.GObject;
 
 /**
- * Базовый класс фабрики для CommandChessMove.
+ * Базовый класс фабрики для CommandChesMove.
  */
 public interface CommandChessFactory {
-    CommandChessMove createCommandChessMove(GBoard gBoard, GObject chess);
+    CommandChesMove createCommandChessMove(GBoard gBoard, GObject chess);
 }

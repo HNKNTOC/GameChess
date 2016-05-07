@@ -1,8 +1,10 @@
 package com.GameChes.logic.mouseListener;
 
-import com.GameChes.logic.gChes.actionMove.CommandChessMove;
+import com.GameChes.logic.gChes.GChes;
+import com.GameChes.logic.gChes.actionMove.CommandChesMove;
 import com.GameEngine.logic.action.command.ActionCommand;
 import com.GameEngine.logic.action.command.gObject.command.CommandMoveAbstract;
+import com.GameEngine.logic.coordinate.Coordinate;
 import com.GameEngine.logic.dynamicValues.DynamicParameter;
 import com.GameEngine.logic.gameComponents.boardComponents.gBoard.GBoard;
 import com.GameEngine.logic.gameComponents.boardComponents.gCell.GCell;
@@ -11,10 +13,10 @@ import com.GameEngine.logic.gameComponents.boardComponents.gObject.GObject;
 import com.GameEngine.logic.gameComponents.gPanel.GPanel;
 import com.GameEngine.logic.gameComponents.gPanel.cell.GPanelCell;
 
-import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
+import java.util.*;
+import java.util.List;
 
 /**
  * Created by Nikita on 09.04.2016.
@@ -64,48 +66,49 @@ public class MouseListenerGChes implements MouseListener {
 
     /**
      * Обрабатывает клик на GCell
+     *
      * @param gCell на который нажали.
      */
-    private void clickedGCell(GCell gCell){
-        backlightCell(gCell.getGObject());
+    private void clickedGCell(GCell gCell) {
+        backlightCell((GChes) gCell.getGObject());
 
         pressedGCell = gCell;
-        if(pressedGObject == null){
+        if (pressedGObject == null) {
             pressedGObject = gCell.getGObject();
-        }else {
+        } else {
             ActionCommand command = pressedGObject.getReceiverAction().getActionCommand(0);
-            command.setParameters(CommandMoveAbstract.NAME_PARAMETER_X,pressedGCell.getX()+"");
-            command.setParameters(CommandMoveAbstract.NAME_PARAMETER_Y,pressedGCell.getY()+"");
+            command.setParameters(CommandMoveAbstract.NAME_PARAMETER_X, pressedGCell.getX() + "");
+            command.setParameters(CommandMoveAbstract.NAME_PARAMETER_Y, pressedGCell.getY() + "");
             command.execute();
             reset();
         }
     }
 
-    private void reset(){
+    private void reset() {
         pressedGObject = null;
         pressedGCell = null;
     }
 
-    private void backlightCell(GObject object){
+    private void backlightCell(GChes gChes) {
         resetBacklight();
-        if(object!=null){
-            CommandChessMove command = (CommandChessMove) object.getReceiverAction().getActionCommand(0);
-            ArrayList<Point> listPosition = command.getListPosition();
+        if (gChes != null) {
+            CommandChesMove command = (CommandChesMove) gChes.getReceiverAction().getActionCommand(0);
+            List<Coordinate> listPosition = command.getListPosition();
             ListGCell<GCell> listGCell = gBoard.getListGCell();
-            for (Point point : listPosition) {
-                GPanelCell panel = listGCell.get((int) point.getX(), (int) point.getY()).getGPanel();
-                panel.getDynamicValues().putParameter(GPanelCell.PARAMETER_NAME_SELECTION,"1");
-                panel.getDynamicValues().putParameter(GPanelCell.PARAMETER_NAME_SELECTION_COLOR,"255,0,0");
+            for (Coordinate coord : listPosition) {
+                GPanelCell panel = listGCell.get(coord.getX(), coord.getY()).getGPanel();
+                panel.getDynamicValues().putParameter(GPanelCell.PARAMETER_NAME_SELECTION, "1");
+                panel.getDynamicValues().putParameter(GPanelCell.PARAMETER_NAME_SELECTION_COLOR, "255,0,0");
                 panel.repaint();
                 backlightCells.add(panel);
             }
         }
     }
 
-    private void resetBacklight(){
+    private void resetBacklight() {
         for (GPanel panel : backlightCells) {
-            panel.getDynamicValues().putParameter(GPanelCell.PARAMETER_NAME_SELECTION,"0");
-            panel.getDynamicValues().putParameter(GPanelCell.PARAMETER_NAME_SELECTION_COLOR,"0,0,0");
+            panel.getDynamicValues().putParameter(GPanelCell.PARAMETER_NAME_SELECTION, "0");
+            panel.getDynamicValues().putParameter(GPanelCell.PARAMETER_NAME_SELECTION_COLOR, "0,0,0");
             panel.repaint();
         }
     }

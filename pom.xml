@@ -12,7 +12,7 @@
         <dependency>
             <groupId>HkCompany</groupId>
             <artifactId>GameEngine</artifactId>
-            <version>3.1.10-alpha</version>
+            <version>3.2.0-alpha</version>
         </dependency>
     </dependencies>
 
