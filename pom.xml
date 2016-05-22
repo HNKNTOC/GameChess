@@ -12,8 +12,21 @@
         <dependency>
             <groupId>HkCompany</groupId>
             <artifactId>GameEngine</artifactId>
-            <version>3.2.0-alpha</version>
+            <version>3.2.1-alpha</version>
         </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+
     </dependencies>
 
     <build>
