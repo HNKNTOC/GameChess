@@ -1,6 +1,5 @@
 package com.GameChes.logic.mouseListener;
 
-import com.GameChes.logic.gChes.GChes;
 import com.GameChes.logic.gChes.actionMove.CommandChesMove;
 import com.GameEngine.logic.action.command.ActionCommand;
 import com.GameEngine.logic.action.command.gObject.command.CommandMoveAbstract;
@@ -12,25 +11,29 @@ import com.GameEngine.logic.gameComponents.boardComponents.gCell.list.ListGCell;
 import com.GameEngine.logic.gameComponents.boardComponents.gObject.GObject;
 import com.GameEngine.logic.gameComponents.gPanel.GPanel;
 import com.GameEngine.logic.gameComponents.gPanel.cell.GPanelCell;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.*;
 import java.util.List;
 
+
 /**
  * Created by Nikita on 09.04.2016.
  */
 public class MouseListenerGChes implements MouseListener {
+    private static final Logger LOGGER = LogManager.getLogger(MouseListenerGChes.class);
     private GBoard gBoard;
-    private boolean clicked;
     private GCell pressedGCell;
     private GObject pressedGObject;
 
-    private ArrayList<GPanel> backlightCells = new ArrayList<>();
+    private final ArrayList<GPanel> highlightedCells = new ArrayList<>();
 
     public MouseListenerGChes(GBoard gBoard) {
         this.gBoard = gBoard;
+        LOGGER.info("Create "+toString());
     }
 
     @Override
@@ -43,15 +46,21 @@ public class MouseListenerGChes implements MouseListener {
 
     }
 
+    /**
+     * Получает из компонента GCell и передаёт его clickedGCell();
+     * @param e
+     */
     @Override
     public void mouseReleased(MouseEvent e) {
+        LOGGER.debug("============Released============");
+        LOGGER.debug("mouseReleased "+e.toString());
         GPanelCell panelCell = (GPanelCell) e.getComponent();
         DynamicParameter dynamicValues = panelCell.getDynamicValues();
         int x = Integer.parseInt(dynamicValues.getParameter("X"));
         int y = Integer.parseInt(dynamicValues.getParameter("Y"));
         GCell gCell = gBoard.getListGCell().get(x, y);
         clickedGCell(gCell);
-
+        LOGGER.debug("===============================");
     }
 
     @Override
@@ -70,18 +79,38 @@ public class MouseListenerGChes implements MouseListener {
      * @param gCell на который нажали.
      */
     private void clickedGCell(GCell gCell) {
-        backlightCell((GChes) gCell.getGObject());
+        LOGGER.debug("Clicked on "+gCell.toString());
+        pressedGCell(gCell);
+        GObject gObject = gCell.getGObject();
 
-        pressedGCell = gCell;
+        highlightsMoveCell(gObject);
+
         if (pressedGObject == null) {
-            pressedGObject = gCell.getGObject();
+            pressedGObject(gObject);
         } else {
-            ActionCommand command = pressedGObject.getReceiverAction().getActionCommand(0);
-            command.setParameters(CommandMoveAbstract.NAME_PARAMETER_X, pressedGCell.getX() + "");
-            command.setParameters(CommandMoveAbstract.NAME_PARAMETER_Y, pressedGCell.getY() + "");
-            command.execute();
-            reset();
+            if (moveGObject()) {
+                reset();
+            }else {
+                pressedGObject(gObject);
+            }
         }
+    }
+
+    private boolean moveGObject(){
+        ActionCommand command = pressedGObject.getReceiverAction().getActionCommand(0);
+        command.setParameters(CommandMoveAbstract.NAME_PARAMETER_X, pressedGCell.getX() + "");
+        command.setParameters(CommandMoveAbstract.NAME_PARAMETER_Y, pressedGCell.getY() + "");
+        return command.execute();
+    }
+
+    private void pressedGObject(GObject object){
+        LOGGER.debug("pressedGObject = "+object);
+        pressedGObject = object;
+    }
+
+    private void pressedGCell(GCell gCell){
+        LOGGER.debug("pressedGCell = "+gCell);
+        pressedGCell = gCell;
     }
 
     private void reset() {
@@ -89,10 +118,15 @@ public class MouseListenerGChes implements MouseListener {
         pressedGCell = null;
     }
 
-    private void backlightCell(GChes gChes) {
-        resetBacklight();
-        if (gChes != null) {
-            CommandChesMove command = (CommandChesMove) gChes.getReceiverAction().getActionCommand(0);
+    /**
+     * Подсвечивает клетки на которые может пойти gObject.
+     * @param gObject ходы которого нужно подсветить.
+     */
+    private void highlightsMoveCell(GObject gObject) {
+        LOGGER.debug("Add highlights "+ gObject);
+        resetHighlights();
+        if (gObject != null) {
+            CommandChesMove command = (CommandChesMove) gObject.getReceiverAction().getActionCommand(0);
             List<Coordinate> listPosition = command.getListPosition();
             ListGCell<GCell> listGCell = gBoard.getListGCell();
             for (Coordinate coord : listPosition) {
@@ -100,16 +134,23 @@ public class MouseListenerGChes implements MouseListener {
                 panel.getDynamicValues().putParameter(GPanelCell.PARAMETER_NAME_SELECTION, "1");
                 panel.getDynamicValues().putParameter(GPanelCell.PARAMETER_NAME_SELECTION_COLOR, "255,0,0");
                 panel.repaint();
-                backlightCells.add(panel);
+                highlightedCells.add(panel);
             }
+        }else {
+            LOGGER.debug("gObject == null");
         }
     }
 
-    private void resetBacklight() {
-        for (GPanel panel : backlightCells) {
+    /**
+     * Убрать подсветку у всех подсвечиных клеток.
+     */
+    private void resetHighlights() {
+        LOGGER.debug("resetHighlights");
+        for (GPanel panel : highlightedCells) {
             panel.getDynamicValues().putParameter(GPanelCell.PARAMETER_NAME_SELECTION, "0");
             panel.getDynamicValues().putParameter(GPanelCell.PARAMETER_NAME_SELECTION_COLOR, "0,0,0");
             panel.repaint();
         }
+        highlightedCells.clear();
     }
 }
