@@ -11,7 +11,7 @@ import java.util.List;
 public class GChesElephant extends GChes {
 
     public GChesElephant() {
-        super();
+
     }
 
     @Override

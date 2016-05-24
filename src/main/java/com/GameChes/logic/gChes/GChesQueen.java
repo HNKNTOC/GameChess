@@ -8,6 +8,9 @@ import java.util.List;
  * Created by Nikita on 07.05.2016.
  */
 public class GChesQueen extends GChes {
+    public GChesQueen() {
+    }
+
     @Override
     public List<Coordinate> countValidCoordinates() {
         GChesElephant elephant = new GChesElephant();

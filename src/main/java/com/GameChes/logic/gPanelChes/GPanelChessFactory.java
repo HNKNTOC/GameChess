@@ -1,6 +1,6 @@
 package com.GameChes.logic.gPanelChes;
 
-import com.GameChes.logic.res.ImageNameChess;
+import com.GameChes.logic.res.ImageNameChes;
 import com.GameEngine.logic.gameComponents.boardComponents.gCell.GCell;
 import com.GameEngine.logic.gameComponents.gPanel.GPanel;
 import com.GameEngine.logic.gameComponents.gPanel.GPanelFactory;
@@ -49,9 +49,9 @@ public class GPanelChessFactory implements GPanelFactory<GPanelCell> {
      */
     public void identifyColor(boolean b){
         if(b){
-            image = ResManager.getResManager().getImageIcon(ImageNameChess.CHESS_WHITE);
+            image = ResManager.getResManager().getImageIcon(ImageNameChes.CELL_WHITE);
         }else {
-            image = ResManager.getResManager().getImageIcon(ImageNameChess.CHESS_BLACK);
+            image = ResManager.getResManager().getImageIcon(ImageNameChes.CEll_BLACK);
         }
     }
 

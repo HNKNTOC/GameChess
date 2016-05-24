@@ -2,6 +2,7 @@ package com.GameChes.logic.gChes;
 
 
 import com.GameEngine.logic.coordinate.Coordinate;
+import com.GameEngine.logic.dynamicValues.DynamicParameter;
 import com.GameEngine.logic.gameComponents.boardComponents.gObject.GObject;
 
 import java.util.List;
@@ -14,12 +15,18 @@ public abstract class GChes extends GObject {
      * Имя параметра.
      * Колличество ходов.
      */
-    public static final String NAME_PARAMETER_NUMBER_MOVE = "numberMove";
+    public static final String NUMBER_MOVE = "numberMove";
+    /**
+     * Имя параметра.
+     * Цвет GChes 0 - черная 1 - белая.
+     */
+    public static final String COLOR_PAWN = "colorPawn";
 
     public GChes() {
-        getDynamicValues().putParameterInt(NAME_PARAMETER_NUMBER_MOVE, 0);
+        DynamicParameter dynamicValues = getDynamicValues();
+        dynamicValues.putParameterInt(NUMBER_MOVE, 0);
+        dynamicValues.putParameterInt(COLOR_PAWN, 0);
     }
-
 
 
     /**

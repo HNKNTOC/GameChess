@@ -26,8 +26,18 @@ import java.util.List;
 public class MouseListenerGChes implements MouseListener {
     private static final Logger LOGGER = LogManager.getLogger(MouseListenerGChes.class);
     private GBoard gBoard;
+    /**
+     * Последний pressedGCell на который нажали.
+     */
     private GCell pressedGCell;
+    /**
+     * Последний GObject на который нажали.
+     */
     private GObject pressedGObject;
+    /**
+     * GObject который находится в pressedGCell.
+     */
+    private GObject thisGObject;
 
     private final ArrayList<GPanel> highlightedCells = new ArrayList<>();
 
@@ -81,22 +91,42 @@ public class MouseListenerGChes implements MouseListener {
     private void clickedGCell(GCell gCell) {
         LOGGER.debug("Clicked on "+gCell.toString());
         pressedGCell(gCell);
-        GObject gObject = gCell.getGObject();
-
-        highlightsMoveCell(gObject);
-
         if (pressedGObject == null) {
-            pressedGObject(gObject);
+            pressedGObject(thisGObject);
         } else {
-            if (moveGObject()) {
-                reset();
-            }else {
-                pressedGObject(gObject);
-            }
+            move();
         }
     }
 
-    private boolean moveGObject(){
+    /**
+     * Передвигает pressedGObject в pressedGCell.
+     */
+    private void move(){
+        if(thisGObject!=null){
+            clashGObject();
+            return;
+        }
+        if (executeMoveCommand()) {
+            reset();
+        }else {
+            pressedGObject(thisGObject);
+        }
+        highlightsMoveCell(pressedGObject);
+    }
+
+    /**
+     * Метод обрабатывает движение pressedGObject на thisGObject.
+     */
+    private void clashGObject(){
+        LOGGER.debug("clashGObject");
+        pressedGObject(thisGObject);
+    }
+
+    /**
+     * Выполняет команду движения для pressedGObject.
+     * @return true если передвижение успешно.
+     */
+    private boolean executeMoveCommand(){
         ActionCommand command = pressedGObject.getReceiverAction().getActionCommand(0);
         command.setParameters(CommandMoveAbstract.NAME_PARAMETER_X, pressedGCell.getX() + "");
         command.setParameters(CommandMoveAbstract.NAME_PARAMETER_Y, pressedGCell.getY() + "");
@@ -104,13 +134,15 @@ public class MouseListenerGChes implements MouseListener {
     }
 
     private void pressedGObject(GObject object){
-        LOGGER.debug("pressedGObject = "+object);
         pressedGObject = object;
+        highlightsMoveCell(pressedGObject);
+        LOGGER.debug("pressedGObject = "+pressedGObject);
     }
 
     private void pressedGCell(GCell gCell){
-        LOGGER.debug("pressedGCell = "+gCell);
         pressedGCell = gCell;
+        thisGObject = gCell.getGObject();
+        LOGGER.debug("pressedGCell = "+pressedGCell+" thisGObject = "+thisGObject);
     }
 
     private void reset() {
@@ -142,7 +174,7 @@ public class MouseListenerGChes implements MouseListener {
     }
 
     /**
-     * Убрать подсветку у всех подсвечиных клеток.
+     * Убрать подсветку у всех подсвеченных клеток.
      */
     private void resetHighlights() {
         LOGGER.debug("resetHighlights");

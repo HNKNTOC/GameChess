@@ -9,6 +9,10 @@ import java.util.List;
  * Created by Nikita on 07.05.2016.
  */
 public class GChesKing extends GChes {
+    public GChesKing() {
+
+    }
+
     @Override
     public List<Coordinate> countValidCoordinates() {
         List<Coordinate> points = new ArrayList<>();

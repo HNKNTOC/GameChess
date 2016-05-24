@@ -77,7 +77,7 @@ public class CommandChesMove extends CommandMoveAbstract {
     }
 
     /**
-     * Прибавляет 1 к параметру NAME_PARAMETER_NUMBER_MOVE.
+     * Прибавляет 1 к параметру NUMBER_MOVE.
      * incrementMove() должен выполнятся при каждом перемещении.
      */
     private void incrementMove() {
