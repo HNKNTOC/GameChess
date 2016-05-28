@@ -1,6 +1,6 @@
 package com.GameChes.logic.mouseListener;
 
-import com.GameChes.logic.gChes.actionMove.CommandChesMove;
+import com.GameChes.logic.ches.actionMove.CommandMoveChes;
 import com.GameEngine.logic.action.command.ActionCommand;
 import com.GameEngine.logic.action.command.gObject.command.CommandMoveAbstract;
 import com.GameEngine.logic.coordinate.Coordinate;
@@ -158,7 +158,7 @@ public class MouseListenerGChes implements MouseListener {
         LOGGER.debug("Add highlights "+ gObject);
         resetHighlights();
         if (gObject != null) {
-            CommandChesMove command = (CommandChesMove) gObject.getReceiverAction().getActionCommand(0);
+            CommandMoveChes command = (CommandMoveChes) gObject.getReceiverAction().getActionCommand(0);
             List<Coordinate> listPosition = command.getListPosition();
             ListGCell<GCell> listGCell = gBoard.getListGCell();
             for (Coordinate coord : listPosition) {

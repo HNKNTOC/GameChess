@@ -1,6 +1,6 @@
-package com.GameChes.logic.gChes.actionMove;
+package com.GameChes.logic.ches.actionMove;
 
-import com.GameChes.logic.gChes.GChes;
+import com.GameChes.logic.ches.Ches;
 import com.GameEngine.logic.action.command.gObject.command.CommandMoveAbstract;
 import com.GameEngine.logic.coordinate.Coordinate;
 import com.GameEngine.logic.dynamicValues.DynamicParameter;
@@ -10,8 +10,9 @@ import java.util.ArrayList;
 
 /**
  * Реализация для перемешения GChess.
+ * Данная команда перемещает GChess
  */
-public class CommandChesMove extends CommandMoveAbstract {
+public class CommandMoveChes extends CommandMoveAbstract {
 
     /**
      * Имя параметра.
@@ -19,14 +20,14 @@ public class CommandChesMove extends CommandMoveAbstract {
      */
     public static final String NAME_PARAMETER_NUMBER_MOVE = "numberMove";
 
-    public CommandChesMove(GChes gChes, GBoard gBoard) {
-        super(gChes, gBoard);
-        gChes.getDynamicValues().putParameterInt(NAME_PARAMETER_NUMBER_MOVE, 0);
+    public CommandMoveChes(Ches ches, GBoard gBoard) {
+        super(ches, gBoard);
+        ches.getDynamicValues().putParameterInt(NAME_PARAMETER_NUMBER_MOVE, 0);
     }
 
     @Override
-    public GChes getObject() {
-        return (GChes) super.getObject();
+    public Ches getObject() {
+        return (Ches) super.getObject();
     }
 
     /**
@@ -53,7 +54,7 @@ public class CommandChesMove extends CommandMoveAbstract {
      */
     public ArrayList<Coordinate> getListPosition() {
         ArrayList<Coordinate> coords = new ArrayList<>();
-        for (Coordinate coord : getObject().countValidCoordinates()) {
+        for (Coordinate coord : getObject().getValidCoordinates(getBoard().getListGCell())) {
             if (checkMaxX(coord.getX()) & checkMaxY(coord.getY())) {
                 coords.add(coord);
             }

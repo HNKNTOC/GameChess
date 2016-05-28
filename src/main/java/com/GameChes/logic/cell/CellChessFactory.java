@@ -1,6 +1,6 @@
-package com.GameChes.logic.gCellChes;
+package com.GameChes.logic.cell;
 
-import com.GameChes.logic.gPanelChes.GPanelChessFactory;
+import com.GameChes.logic.panel.PanelChessFactory;
 import com.GameEngine.logic.gameComponents.boardComponents.gCell.GCell;
 import com.GameEngine.logic.gameComponents.boardComponents.gCell.GCellDefault;
 import com.GameEngine.logic.gameComponents.boardComponents.gCell.GCellFactory;
@@ -13,26 +13,26 @@ import java.util.Iterator;
 /**
  * Created by Nikita on 20.02.2016.
  */
-public class GCellChessFactory implements GCellFactory {
+public class CellChessFactory implements GCellFactory {
 
     /**
      * Фабрика которая будет создавать GPanelCell для GCell.
      */
-    private GPanelChessFactory factory;
+    private PanelChessFactory factory;
 
-    public GCellChessFactory() {
-        factory = new GPanelChessFactory();
+    public CellChessFactory() {
+        factory = new PanelChessFactory();
     }
 
-    public GCellChessFactory(GPanelChessFactory factory) {
+    public CellChessFactory(PanelChessFactory factory) {
         this.factory = factory;
     }
 
-    public GPanelChessFactory getFactory() {
+    public PanelChessFactory getFactory() {
         return factory;
     }
 
-    public void setFactory(GPanelChessFactory factory) {
+    public void setFactory(PanelChessFactory factory) {
         this.factory = factory;
     }
 
@@ -63,9 +63,9 @@ public class GCellChessFactory implements GCellFactory {
 
     public ListGCell<GCell> createListGCell(int maxX, int maxY){
         ListGCell<GCell> listGCell = new HashMapPanelGCell(maxX, maxY);
-        GCellChessFactory factoryBlack = new GCellChessFactory();
+        CellChessFactory factoryBlack = new CellChessFactory();
         factoryBlack.getFactory().identifyColor(false);
-        GCellChessFactory factoryWinter = new GCellChessFactory();
+        CellChessFactory factoryWinter = new CellChessFactory();
         factoryWinter.getFactory().identifyColor(true);
 
         Iterator<GCell> iteratorBlack = factoryBlack.createGCell(maxX * maxY / 2).iterator();

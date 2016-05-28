@@ -1,4 +1,4 @@
-package com.GameChes.logic.gPanelChes;
+package com.GameChes.logic.panel;
 
 import com.GameChes.logic.res.ImageNameChes;
 import com.GameEngine.logic.gameComponents.boardComponents.gCell.GCell;
@@ -14,7 +14,7 @@ import javax.swing.*;
 /**
  * Created by Nikita on 13.04.2016.
  */
-public class GPanelChessFactory implements GPanelFactory<GPanelCell> {
+public class PanelChessFactory implements GPanelFactory<GPanelCell> {
 
     private ImageIcon image = ResManager.getResManager().getImageIcon(ImageName.NULL);
 
