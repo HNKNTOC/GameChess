@@ -14,17 +14,12 @@ public class CommandMoveElephant extends CommandMoveChes {
     }
 
     @Override
-    protected void countValidCoordinates() {
-        LOGGER.debug("=====countValidCoordinates=====");
-        final int oldX = object.getX();
-        final int oldY = object.getY();
-        LOGGER.debug("Start coord = ("+oldX+";"+oldY+")");
-
+    protected void countValidCoordinates(int oldX, int oldY) {
+        super.countValidCoordinates(oldX,oldY);
         countLeftUp(oldX, oldY);
         countRightUp(oldX, oldY);
         countLeftDown(oldX, oldY);
         countRightDown(oldX, oldY);
-        LOGGER.debug("===============");
     }
 
     private void countRightDown(int x, int y) {
@@ -32,7 +27,6 @@ public class CommandMoveElephant extends CommandMoveChes {
         for (int i = 0; i < 10; i++) {
             x++;
             y++;
-            LOGGER.debug("new ("+x+";"+y+")");
             if (!addCoordinate(x, y)){ LOGGER.debug("break"); break;}
         }
         LOGGER.debug("=========");
@@ -43,7 +37,6 @@ public class CommandMoveElephant extends CommandMoveChes {
         for (int i = 0; i < 10; i++) {
             x--;
             y++;
-            LOGGER.debug("new ("+x+";"+y+")");
             if (!addCoordinate(x, y)){ LOGGER.debug("break"); break;}
         }
         LOGGER.debug("=========");
@@ -54,7 +47,6 @@ public class CommandMoveElephant extends CommandMoveChes {
         for (int i = 0; i < 10; i++) {
             x++;
             y--;
-            LOGGER.debug("new ("+x+";"+y+")");
             if (!addCoordinate(x, y)){ LOGGER.debug("break"); break;}
         }
         LOGGER.debug("=========");
@@ -65,7 +57,6 @@ public class CommandMoveElephant extends CommandMoveChes {
         for (int i = 0; i < 10; i++) {
             x--;
             y--;
-            LOGGER.debug("new ("+x+";"+y+")");
             if (!addCoordinate(x, y)){ LOGGER.debug("break"); break;}
         }
         LOGGER.debug("=========");

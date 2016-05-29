@@ -70,18 +70,22 @@ public abstract class CommandMoveChes extends CommandMoveAbstract {
     public List<Coordinate> getListPosition() {
         LOGGER.debug("====getListPosition====");
         validCoordinates.clear();
-        countValidCoordinates();
+        countValidCoordinates(getObject().getX(),getObject().getY());
         LOGGER.debug("================ return "+validCoordinates.toString());
         return validCoordinates;
     }
 
     /**
      * Вычисляет все возможные координаты куда может пойти шахматная фигурка.
-     * И добавляет их в validCoordinates через метод addCoordinate().
+     * И добавляет их через метод addCoordinate().
      *
-     * @return список координат.
+     * @param oldX координата начальной клетки по x.
+     * @param oldY координата начальной клетки по y.
      */
-    protected abstract void countValidCoordinates();
+    protected void countValidCoordinates(final int oldX,final int oldY){
+        LOGGER.debug("=====countValidCoordinates=====");
+        LOGGER.debug("Start coord = ("+oldX+";"+oldY+")");
+    }
 
     /**
      * Добавляет координату в validCoordinates.
@@ -93,6 +97,7 @@ public abstract class CommandMoveChes extends CommandMoveAbstract {
      * если есть в этой координате другой Ches.
      */
     protected boolean addCoordinate(int x, int y) {
+        LOGGER.debug("new ("+x+";"+y+")");
         if(checkMaxCoordinate(x,y)){
             if(checkPermeability(x,y)){
                 LOGGER.debug("addCoordinate coord = ("+x+";"+y+") true and add");

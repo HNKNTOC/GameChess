@@ -1,12 +1,13 @@
 package com.GameChes.logic.ches;
 
-import com.GameEngine.logic.gameComponents.boardComponents.gCell.GCell;
-import com.GameEngine.logic.gameComponents.boardComponents.gCell.list.ListGCell;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 /**
  * Created by Nikita on 07.05.2016.
  */
 public class ChesHorse extends Ches {
+
     public ChesHorse() {
 
     }

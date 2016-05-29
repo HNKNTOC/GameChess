@@ -50,6 +50,7 @@ public class Main {
 
 
         display.showPanel(gBoard.getGPanel());
+        display.getJFrame().setSize(420,390);
         display.start();
     }
 
@@ -137,6 +138,7 @@ public class Main {
         x = 1;
         for (int i = 0; i < 2; i++) {
             Ches horse = factory.createHorse();
+            horse.getReceiverAction().setActionCommand(new CommandMoveHorse(horse, gBoard), 0);
             addGChes(horse, x, 7);
             x = 6;
         }
