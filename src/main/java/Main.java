@@ -75,20 +75,20 @@ public class Main {
 
     }
 
-    public static void addGChessBlack(){
+    public static void addGChessBlack() {
         ChesFactory factory = new ChesFactory(false);
 
         int x = 0;
         for (int i = 0; i < 8; i++) {
             Ches chess = factory.createPawn();
-            addGChes(chess,x,1);
+            addGChes(chess, x, 1);
             x++;
         }
 
         x = 0;
         for (int i = 0; i < 2; i++) {
             Ches rook = factory.createRook();
-            addGChes(rook,x,0);
+            addGChes(rook, x, 0);
             x = 7;
         }
 
@@ -96,7 +96,7 @@ public class Main {
         x = 1;
         for (int i = 0; i < 2; i++) {
             Ches horse = factory.createHorse();
-            addGChes(horse,x,0);
+            addGChes(horse, x, 0);
             x = 6;
         }
 
@@ -104,15 +104,15 @@ public class Main {
         x = 2;
         for (int i = 0; i < 2; i++) {
             Ches elephant = factory.createElephant();
-            addGChes(elephant,x,0);
+            addGChes(elephant, x, 0);
             x = 5;
         }
 
         Ches queen = factory.createQueen();
-        addGChes(queen,3,0);
+        addGChes(queen, 3, 0);
 
         Ches king = factory.createKing();
-        addGChes(king,4,0);
+        addGChes(king, 4, 0);
     }
 
     private static void addGChesAll() {
@@ -120,16 +120,16 @@ public class Main {
         ChesFactory factory = new ChesFactory(true);
 
         int x = 0;
-        for (int i = 0; i < 8; i++) {
+        /*for (int i = 0; i < 8; i++) {
             Ches chess = factory.createPawn();
-            addGChes(chess,x,6);
+            addGChes(chess, x, 6);
             x++;
-        }
+        }*/
 
         x = 0;
         for (int i = 0; i < 2; i++) {
             Ches rook = factory.createRook();
-            addGChes(rook,x,7);
+            addGChes(rook, x, 7);
             x = 7;
         }
 
@@ -137,7 +137,7 @@ public class Main {
         x = 1;
         for (int i = 0; i < 2; i++) {
             Ches horse = factory.createHorse();
-            addGChes(horse,x,7);
+            addGChes(horse, x, 7);
             x = 6;
         }
 
@@ -145,22 +145,23 @@ public class Main {
         x = 2;
         for (int i = 0; i < 2; i++) {
             Ches elephant = factory.createElephant();
-            addGChes(elephant,x,7);
+            elephant.getReceiverAction().setActionCommand(new CommandMoveElephant(elephant, gBoard), 0);
+            addGChes(elephant, x, 7);
             x = 5;
         }
 
         Ches queen = factory.createQueen();
-        addGChes(queen,3,7);
+        addGChes(queen, 3, 7);
 
         Ches king = factory.createKing();
-        addGChes(king,4,7);
+        king.getReceiverAction().setActionCommand(new CommandMoveElephant(king, gBoard), 0);
+        addGChes(king, 4, 7);
     }
 
-    private static void addGChes(Ches ches, int x, int y){
-        ches.getReceiverAction().setActionCommand(new CommandMoveChes(ches,gBoard),0);
+    private static void addGChes(Ches ches, int x, int y) {
         ches.setX(x);
         ches.setY(y);
-        listGCell.get(x,y).setGObject(ches);
+        listGCell.get(x, y).setGObject(ches);
     }
 
 }

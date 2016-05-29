@@ -11,7 +11,7 @@ public class ChesHorse extends Ches {
 
     }
 
-    @Override
+    /*@Override
     public void countValidCoordinates(ListGCell<GCell> listGCell) {
         int x = getX();
         int y = getY();
@@ -27,5 +27,5 @@ public class ChesHorse extends Ches {
 
         addCoordinates(x+2,y+1);
         addCoordinates(x+2,y-1);
-    }
+    }*/
 }

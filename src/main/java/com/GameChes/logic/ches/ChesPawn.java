@@ -12,11 +12,11 @@ public class ChesPawn extends Ches {
 
     }
 
-    @Override
+/*    @Override
     public void countValidCoordinates(ListGCell<GCell> listGCell) {
         addCoordinates(getX(), getY() - 1);
         if (getDynamicValues().getParameterInt(NUMBER_MOVE)<=0) {
             addCoordinates(getX(), getY() - 2);
         }
-    }
+    }*/
 }

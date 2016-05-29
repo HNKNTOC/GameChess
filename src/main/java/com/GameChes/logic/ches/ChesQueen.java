@@ -13,7 +13,7 @@ public class ChesQueen extends Ches {
     public ChesQueen() {
     }
 
-    @Override
+/*    @Override
     public void countValidCoordinates(ListGCell<GCell> listGCell) {
         ChesElephant elephant = new ChesElephant();
         elephant.setX(getX());
@@ -26,5 +26,5 @@ public class ChesQueen extends Ches {
         List<Coordinate> listPosition2 = gChesRook.getValidCoordinates(listGCell);
         listPosition1.addAll(listPosition2);
         setValidCoordinates(listPosition1);
-    }
+    }*/
 }

@@ -11,7 +11,7 @@ public class ChesKing extends Ches {
 
     }
 
-    @Override
+/*    @Override
     public void countValidCoordinates(ListGCell<GCell> listGCell) {
         final int y = getY();
         final int x = getX();
@@ -25,5 +25,5 @@ public class ChesKing extends Ches {
 
         addCoordinates(x-1, y+1);
         addCoordinates(x+1, y-1);
-    }
+    }*/
 }

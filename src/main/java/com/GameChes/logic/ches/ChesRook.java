@@ -10,7 +10,7 @@ public class ChesRook extends Ches {
     public ChesRook() {
     }
 
-    @Override
+/*    @Override
     public void countValidCoordinates(ListGCell<GCell> listGCell) {
         final int x = getX();
         final int y = getY();
@@ -29,5 +29,5 @@ public class ChesRook extends Ches {
             rightX++;
             addCoordinates(rightX, y);
         }
-    }
+    }*/
 }
