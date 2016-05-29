@@ -5,24 +5,37 @@ import com.GameEngine.logic.action.command.gObject.command.CommandMoveAbstract;
 import com.GameEngine.logic.coordinate.Coordinate;
 import com.GameEngine.logic.dynamicValues.DynamicParameter;
 import com.GameEngine.logic.gameComponents.boardComponents.gBoard.GBoard;
+import org.apache.log4j.LogManager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Реализация для перемешения GChess.
+ * Реализация для перемещения GChess.
  * Данная команда перемещает GChess
  */
-public class CommandMoveChes extends CommandMoveAbstract {
-
+public abstract class CommandMoveChes extends CommandMoveAbstract {
+    private static final org.apache.log4j.Logger LOGGER = LogManager.getLogger(CommandMoveChes.class);
     /**
      * Имя параметра.
-     * Колличество ходов.
+     * Количество ходов.
      */
-    public static final String NAME_PARAMETER_NUMBER_MOVE = "numberMove";
+    public static final String NUMBER_MOVE = "numberMove";
 
-    public CommandMoveChes(Ches ches, GBoard gBoard) {
+    /**
+     * Список координат на который может переместиться Ches.
+     */
+    private final List<Coordinate> validCoordinates;
+    /**
+     * Может ли ches проходить через другие ches.
+     */
+    private final boolean permeability;
+
+    public CommandMoveChes(Ches ches, GBoard gBoard, boolean permeability) {
         super(ches, gBoard);
-        ches.getDynamicValues().putParameterInt(NAME_PARAMETER_NUMBER_MOVE, 0);
+        this.permeability = permeability;
+        ches.getDynamicValues().putParameterInt(NUMBER_MOVE, 0);
+        validCoordinates = new ArrayList<>();
     }
 
     @Override
@@ -41,9 +54,11 @@ public class CommandMoveChes extends CommandMoveAbstract {
     protected boolean check(int x, int y) {
         for (Coordinate coord : getListPosition()) {
             if (coord.getX() == x & coord.getY() == y) {
+                LOGGER.debug("check coord = ("+x+";"+y+") true");
                 return true;
             }
         }
+        LOGGER.debug("check coord = ("+x+";"+y+") false");
         return false;
     }
 
@@ -52,19 +67,77 @@ public class CommandMoveChes extends CommandMoveAbstract {
      *
      * @return Список с координатами на которые может пойти шахматная фигурка.
      */
-    public ArrayList<Coordinate> getListPosition() {
-        ArrayList<Coordinate> coords = new ArrayList<>();
-        for (Coordinate coord : getObject().getValidCoordinates(getBoard().getListGCell())) {
-            if (checkMaxX(coord.getX()) & checkMaxY(coord.getY())) {
-                coords.add(coord);
-            }
-        }
-        return coords;
+    public List<Coordinate> getListPosition() {
+        LOGGER.debug("====getListPosition====");
+        validCoordinates.clear();
+        countValidCoordinates();
+        LOGGER.debug("================ return "+validCoordinates.toString());
+        return validCoordinates;
     }
 
     /**
-     * Перемешение выполняется супер классом.
-     * Выполняет метод incrementMove() при каждом перемешении.
+     * Вычисляет все возможные координаты куда может пойти шахматная фигурка.
+     * И добавляет их в validCoordinates через метод addCoordinate().
+     *
+     * @return список координат.
+     */
+    protected abstract void countValidCoordinates();
+
+    /**
+     * Добавляет координату в validCoordinates.
+     * Перед добавлением проверяет её.
+     *
+     * @param x координата клетки x.
+     * @param y координата клетки y.
+     * @return false если превышает x или y максимальное значение или
+     * если есть в этой координате другой Ches.
+     */
+    protected boolean addCoordinate(int x, int y) {
+        if(checkMaxCoordinate(x,y)){
+            if(checkPermeability(x,y)){
+                LOGGER.debug("addCoordinate coord = ("+x+";"+y+") true and add");
+                validCoordinates.add(new Coordinate(x,y));
+                return true;
+            }
+            LOGGER.debug("addCoordinate coord = ("+x+";"+y+") false and add");
+            validCoordinates.add(new Coordinate(x,y));
+            return false;
+        }
+        LOGGER.debug("addCoordinate coord = ("+x+";"+y+") false");
+        return false;
+    }
+
+    /**
+     * Проверка превышает ли x и y максимального значения.
+     *
+     * @param x координата клетки x.
+     * @param y координата клетки y.
+     * @return false если x или y превышает максимальное значения.
+     */
+    public boolean checkMaxCoordinate(int x, int y) {
+        return checkMaxX(x) & checkMaxY(y);
+    }
+
+    /**
+     * Проверяет есть ли на данной клетке GChes.
+     * @param x координата клетки x.
+     * @param y координата клетки y.
+     * @return
+     */
+    public boolean checkPermeability(int x, int y) {
+        if(!permeability){
+            if(getBoard().getListGCell().get(x,y).getGObject()!=null){
+                LOGGER.debug("checkPermeability coord = ("+x+";"+y+") false");
+                return false;
+            }
+        }
+        LOGGER.debug("checkPermeability coord = ("+x+";"+y+") true");
+        return true;
+    }
+
+    /**
+     * Перемещение выполняется супер классом.
+     * Выполняет метод incrementMove() при каждом перемещении.
      *
      * @param x    координата клетки в которую нужно передвинуть.
      * @param y    координата клетки в которую нужно передвинуть.
@@ -83,8 +156,9 @@ public class CommandMoveChes extends CommandMoveAbstract {
      */
     private void incrementMove() {
         DynamicParameter dynamicValues = getObject().getDynamicValues();
-        int parameterInt = dynamicValues.getParameterInt(NAME_PARAMETER_NUMBER_MOVE);
+        int parameterInt = dynamicValues.getParameterInt(NUMBER_MOVE);
         parameterInt++;
-        dynamicValues.putParameterInt(NAME_PARAMETER_NUMBER_MOVE, parameterInt);
+        dynamicValues.putParameterInt(NUMBER_MOVE, parameterInt);
+        LOGGER.debug("incrementMove NUMBER_MOVE = "+parameterInt);
     }
 }

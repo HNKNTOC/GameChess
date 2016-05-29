@@ -33,7 +33,7 @@ public class CommandMoveChesTest extends Assert {
         ches = (Ches) data.get(0);
         gBoard = (GBoard) data.get(1);
         coordListTrue = (List) data.get(2);
-        commandMoveChes = new CommandMoveChes(ches,gBoard);
+        commandMoveChes = new CommandMoveElephant(ches,gBoard);
     }
 
     @Before
