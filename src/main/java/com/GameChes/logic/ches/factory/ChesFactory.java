@@ -1,8 +1,11 @@
 package com.GameChes.logic.ches.factory;
 
 import com.GameChes.logic.ches.*;
+import com.GameChes.logic.ches.actionMove.*;
 import com.GameChes.logic.res.ImageNameChes;
 import com.GameEngine.logic.action.command.gObject.ReceiverGObject;
+import com.GameEngine.logic.gameComponents.boardComponents.gBoard.GBoard;
+import com.GameEngine.logic.resources.ImageName;
 import com.GameEngine.logic.resources.manager.ResManager;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -16,6 +19,7 @@ public class ChesFactory {
     private static final Logger LOGGER = LogManager.getLogger(ChesFactory.class);
     private static final ResManager resManager = ResManager.getResManager();
     private String colorPawn;
+    private final GBoard gBoard;
     /**
      * Пути до картинок.
      */
@@ -25,8 +29,10 @@ public class ChesFactory {
     /**
      * Создают фабрику с указанным цветом.
      * @param color false - черный, true - белый.
+     * @param gBoard
      */
-    public ChesFactory(boolean color) {
+    public ChesFactory(boolean color, GBoard gBoard) {
+        this.gBoard = gBoard;
         if (color) {
             setImagePawnWhite();
             colorPawn = "1";
@@ -56,58 +62,65 @@ public class ChesFactory {
     }
 
 
-    private void settingChes(Ches ches, String imageName) {
-        ReceiverGObject receiverAction = new ReceiverGObject();
-        ches.getDynamicValues().putParameter(Ches.COLOR_PAWN, colorPawn);
-        ches.setReceiverAction(receiverAction);
+    private void settingImage(Ches ches, String imageName) {
         ImageIcon imageIcon = resManager.getImageIcon(imageName);
         if (imageIcon == null) {
             LOGGER.warn("imageIcon == null");
+            ches.getGPanel().setImageIcon(resManager.getImageIcon(ImageName.NULL));
             return;
         }
         ches.getGPanel().setImageIcon(imageIcon);
+        return;
     }
 
-    public ChesPawn createPawn() {
+    private Ches createChesEmpty(String imageName){
+        Ches ches = new Ches();
+        ches.getDynamicValues().putParameter(Ches.COLOR_PAWN, colorPawn);
+        ches.setReceiverAction(new ReceiverGObject());
+        settingImage(ches,imageName);
+        return ches;
+    }
+
+    public Ches createPawn() {
         LOGGER.debug("createPawn");
-        ChesPawn gChesPawn = new ChesPawn();
-        settingChes(gChesPawn, imagePathPawn);
-        return gChesPawn;
+        Ches ches = createChesEmpty(imagePathPawn);
+        ches.getReceiverAction().setActionCommand(new CommandMovePawn(ches,gBoard),0);
+        return ches;
     }
 
-    public ChesRook createRook() {
+    public Ches createRook() {
         LOGGER.debug("createRook");
-        ChesRook gChesRook = new ChesRook();
-        settingChes(gChesRook, imagePathRook);
-        return gChesRook;
+        Ches ches = createChesEmpty(imagePathRook);
+        ches.getReceiverAction().setActionCommand(new CommandMoveRook(ches,gBoard),0);
+        return ches;
     }
 
-    public ChesHorse createHorse() {
+    public Ches createHorse() {
         LOGGER.debug("createHorse");
-        ChesHorse gChesHorse = new ChesHorse();
-        settingChes(gChesHorse, imagePathHorse);
-        return gChesHorse;
+        Ches ches = createChesEmpty(imagePathHorse);
+        ches.getReceiverAction().setActionCommand(new CommandMoveHorse(ches,gBoard),0);
+        return ches;
     }
 
-    public ChesElephant createElephant() {
+    public Ches createElephant() {
         LOGGER.debug("createElephant");
-        ChesElephant gChesElephant = new ChesElephant();
-        settingChes(gChesElephant, imagePathElephant);
-        return gChesElephant;
+        Ches ches = createChesEmpty(imagePathElephant);
+        ches.getReceiverAction().setActionCommand(new CommandMoveElephant(ches,gBoard),0);
+        return ches;
     }
 
-    public ChesQueen createQueen() {
+    public Ches createQueen() {
         LOGGER.debug("createQueen");
-        ChesQueen gChesQueen = new ChesQueen();
-        settingChes(gChesQueen, imagePathQueen);
-        return gChesQueen;
+        Ches ches = createChesEmpty(imagePathQueen);
+        ches.getReceiverAction().setActionCommand(new CommandMoveQueen(ches,gBoard),0);
+        return ches;
     }
 
-    public ChesKing createKing() {
+    public Ches createKing() {
         LOGGER.debug("createKing");
-        ChesKing gChesKing = new ChesKing();
-        settingChes(gChesKing, imagePathKing);
-        return gChesKing;
+        Ches ches = createChesEmpty(imagePathKing);
+        ches.getReceiverAction().setActionCommand(new CommandMoveKing(ches,gBoard),0);
+        return ches;
     }
 
     @Override

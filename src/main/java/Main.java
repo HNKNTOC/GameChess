@@ -1,6 +1,5 @@
 import com.GameChes.logic.cell.CellChessFactory;
 import com.GameChes.logic.ches.Ches;
-import com.GameChes.logic.ches.actionMove.*;
 import com.GameChes.logic.ches.factory.ChesFactory;
 import com.GameChes.logic.mouseListener.MouseListenerGChes;
 import com.GameChes.logic.res.ImageNameChes;
@@ -36,7 +35,8 @@ public class Main {
         gBoard = factoryGBoard.createGBoard(listGCell);
 
         Main.listGCell = gBoard.getListGCell();
-        addGChesAll();
+        addGChess(new ChesFactory(false, gBoard),1,0);
+        addGChess(new ChesFactory(true, gBoard),6,7);
 
         gBoard.getGPanel().setImageIcon(null);
         gBoard.updateGCell();
@@ -50,7 +50,7 @@ public class Main {
 
 
         display.showPanel(gBoard.getGPanel());
-        display.getJFrame().setSize(420,390);
+        display.getJFrame().setSize(500,450);
         display.start();
     }
 
@@ -70,26 +70,30 @@ public class Main {
         resManager.putImageIcon(ImageLoader.getImage(ImageNameChes.CHESS_BLACK_PAWN));
         resManager.putImageIcon(ImageLoader.getImage(ImageNameChes.CHESS_BLACK_ROOK));
         resManager.putImageIcon(ImageLoader.getImage(ImageNameChes.CHESS_BLACK_HORSE));
+        resManager.putImageIcon(ImageLoader.getImage(ImageNameChes.CHESS_BLACK_QUEEN));
         resManager.putImageIcon(ImageLoader.getImage(ImageNameChes.CHESS_BLACK_ELEPHANT));
         resManager.putImageIcon(ImageLoader.getImage(ImageNameChes.CHESS_BLACK_KING));
-        resManager.putImageIcon(ImageLoader.getImage(ImageNameChes.CHESS_BLACK_QUEEN));
 
     }
 
-    public static void addGChessBlack() {
-        ChesFactory factory = new ChesFactory(false);
-
+    /**
+     * Добавляет ches на доску одного из игроков.
+     * @param factory фабрика создающая ches.
+     * @param startPawn ось y на которой будут размешены Pawn.
+     * @param startOthers ось y на которой будут размешены остальные Ches.
+     */
+    public static void addGChess(ChesFactory factory, final int startPawn , final int startOthers) {
         int x = 0;
         for (int i = 0; i < 8; i++) {
             Ches chess = factory.createPawn();
-            addGChes(chess, x, 1);
+            addGChes(chess, x, startPawn);
             x++;
         }
 
         x = 0;
         for (int i = 0; i < 2; i++) {
             Ches rook = factory.createRook();
-            addGChes(rook, x, 0);
+            addGChes(rook, x, startOthers);
             x = 7;
         }
 
@@ -97,7 +101,7 @@ public class Main {
         x = 1;
         for (int i = 0; i < 2; i++) {
             Ches horse = factory.createHorse();
-            addGChes(horse, x, 0);
+            addGChes(horse, x, startOthers);
             x = 6;
         }
 
@@ -105,62 +109,20 @@ public class Main {
         x = 2;
         for (int i = 0; i < 2; i++) {
             Ches elephant = factory.createElephant();
-            addGChes(elephant, x, 0);
+            addGChes(elephant, x, startOthers);
             x = 5;
         }
 
         Ches queen = factory.createQueen();
-        addGChes(queen, 3, 0);
+        addGChes(queen, 3, startOthers);
 
         Ches king = factory.createKing();
-        addGChes(king, 4, 0);
+        addGChes(king, 4, startOthers);
     }
 
-    private static void addGChesAll() {
-        addGChessBlack();
-        ChesFactory factory = new ChesFactory(true);
-
-        int x = 0;
-        /*for (int i = 0; i < 8; i++) {
-            Ches chess = factory.createPawn();
-            addGChes(chess, x, 6);
-            x++;
-        }*/
-
-        x = 0;
-        for (int i = 0; i < 2; i++) {
-            Ches rook = factory.createRook();
-            addGChes(rook, x, 7);
-            x = 7;
-        }
-
-
-        x = 1;
-        for (int i = 0; i < 2; i++) {
-            Ches horse = factory.createHorse();
-            horse.getReceiverAction().setActionCommand(new CommandMoveHorse(horse, gBoard), 0);
-            addGChes(horse, x, 7);
-            x = 6;
-        }
-
-
-        x = 2;
-        for (int i = 0; i < 2; i++) {
-            Ches elephant = factory.createElephant();
-            elephant.getReceiverAction().setActionCommand(new CommandMoveElephant(elephant, gBoard), 0);
-            addGChes(elephant, x, 7);
-            x = 5;
-        }
-
-        Ches queen = factory.createQueen();
-        addGChes(queen, 3, 7);
-
-        Ches king = factory.createKing();
-        king.getReceiverAction().setActionCommand(new CommandMoveElephant(king, gBoard), 0);
-        addGChes(king, 4, 7);
-    }
 
     private static void addGChes(Ches ches, int x, int y) {
+        System.out.println("=========="+x+";"+y);
         ches.setX(x);
         ches.setY(y);
         listGCell.get(x, y).setGObject(ches);

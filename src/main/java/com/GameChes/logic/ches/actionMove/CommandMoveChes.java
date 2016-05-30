@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Реализация для перемещения GChess.
- * Данная команда перемещает GChess
+ * Абстрактный класс для всех комманд передвижения.
+ * Наследники должны переопределить метод countValidCoordinates().
  */
 public abstract class CommandMoveChes extends CommandMoveAbstract {
     private static final org.apache.log4j.Logger LOGGER = LogManager.getLogger(CommandMoveChes.class);
@@ -119,7 +119,7 @@ public abstract class CommandMoveChes extends CommandMoveAbstract {
      * @param y координата клетки y.
      * @return false если x или y превышает максимальное значения.
      */
-    public boolean checkMaxCoordinate(int x, int y) {
+    private boolean checkMaxCoordinate(int x, int y) {
         return checkMaxX(x) & checkMaxY(y);
     }
 
@@ -129,7 +129,7 @@ public abstract class CommandMoveChes extends CommandMoveAbstract {
      * @param y координата клетки y.
      * @return
      */
-    public boolean checkPermeability(int x, int y) {
+    private boolean checkPermeability(int x, int y) {
         if(!permeability){
             if(getBoard().getListGCell().get(x,y).getGObject()!=null){
                 LOGGER.debug("checkPermeability coord = ("+x+";"+y+") false");

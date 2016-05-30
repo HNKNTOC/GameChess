@@ -9,7 +9,7 @@ import com.GameEngine.logic.gameComponents.boardComponents.gObject.GObject;
 /**
  * Реализация Шахматной фигурки.
  */
-public abstract class Ches extends GObject {
+public class Ches extends GObject {
     /**
      * Имя параметра.
      * Колличество ходов.
